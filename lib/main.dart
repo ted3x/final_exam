@@ -27,3 +27,5 @@ class MyApp extends StatelessWidget {
 }
 
 const int lightGreen = 0xff95d3c4;
+const int darkGreen = 0xff267b7b;
+const int textColor = 0xff707070;

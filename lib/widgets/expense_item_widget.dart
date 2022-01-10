@@ -1,3 +1,4 @@
+import 'package:final_exam/extensions/date_ext.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,7 +45,7 @@ class ExpenseItemWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(width: 9),
-                Text(formattedDate,
+                Text(date.formatWithHour(),
                     style: GoogleFonts.poppins(
                         textStyle: const TextStyle(
                             fontSize: 12, color: Color(0x73707070)))),
