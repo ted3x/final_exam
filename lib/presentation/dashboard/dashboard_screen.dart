@@ -46,7 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: IconButton(
                     icon: const Icon(Icons.add, color: Colors.white),
                     onPressed: () {
-                      showBottomDialog(context, showAddExpenseBottomDialog(context));
+                      showBottomDialog(context, getAddExpenseWidget(context));
                     },
                   ),
                 )
@@ -99,7 +99,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         // amis feri ver davamtxvie dokumentaciidan, xd-shic sxva feria amitom davtove es
                                         showBottomDialog(
                                             context,
-                                            showExpenseBottomDialog(
+                                            getExpenseWidget(
                                                 context, state.data![index]));
                                       },
                                       child: ExpenseItemWidget(

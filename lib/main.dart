@@ -1,3 +1,4 @@
+import 'package:final_exam/logic/expenses_date_provider.dart';
 import 'package:final_exam/logic/expenses_provider.dart';
 import 'package:final_exam/presentation/dashboard/dashboard_screen.dart';
 import 'package:final_exam/presentation/login/login_screen.dart';
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => ExpensesCubit())],
+        providers: [
+          BlocProvider(create: (context) => ExpensesCubit()),
+          BlocProvider(create: (context) => ExpensesDateCubit())
+        ],
         child: MaterialApp(
           title: 'Personal Expenses',
           routes: {

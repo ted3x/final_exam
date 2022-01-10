@@ -1,8 +1,5 @@
-import 'package:final_exam/extensions/date_ext.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 
 import '../main.dart';
 
@@ -10,8 +7,10 @@ class EditTextWidget extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final String validationText;
+  final TextAlign textAlign;
+  final Color underlineColor;
 
-  const EditTextWidget(this.hint, this.controller, this.validationText);
+  const EditTextWidget(this.hint, this.controller, this.validationText, this.textAlign, this.underlineColor);
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +22,15 @@ class EditTextWidget extends StatelessWidget {
         return null;
       },
       textAlignVertical: TextAlignVertical.center,
-      textAlign: TextAlign.start,
+      textAlign: textAlign,
       style: const TextStyle(color: Color(textColor), fontSize: 18),
       controller: controller,
       decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(0),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: underlineColor),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: underlineColor),
           ),
           hintText: hint,
           hintStyle: GoogleFonts.poppins(

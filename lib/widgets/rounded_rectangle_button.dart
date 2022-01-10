@@ -13,7 +13,7 @@ class RoundedRectangleButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 189,
+      width: 151,
       height: 37,
       decoration: BoxDecoration(
         color: Color(backgroundColor),
