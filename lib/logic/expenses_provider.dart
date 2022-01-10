@@ -24,8 +24,32 @@ class ExpensesCubit extends Cubit<RequestState> {
   Future<void> addExpense(Expense expense) async {
     emit(Loading());
     try {
-      var expenses = await expensesRepository.fetchExpenses();
-      emit(Success(expenses!));
+      await expensesRepository.addExpense(expense);
+      emit(Success(null));
+    } catch (e) {
+      emit(
+        Error(e.toString()),
+      );
+    }
+  }
+
+  Future<void> deleteExpense(Expense expense) async {
+    emit(Loading());
+    try {
+      await expensesRepository.deleteExpense(expense.id);
+      emit(Success(null));
+    } catch (e) {
+      emit(
+        Error(e.toString()),
+      );
+    }
+  }
+
+  Future<void> updateExpense(Expense expense) async {
+    emit(Loading());
+    try {
+      await expensesRepository.updateExpense(expense);
+      emit(Success(null));
     } catch (e) {
       emit(
         Error(e.toString()),

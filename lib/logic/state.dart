@@ -10,7 +10,7 @@ class Loading<T> extends RequestState {
 }
 
 class Success<T> extends RequestState {
-  final T data;
+  final T? data;
 
   Success(this.data);
 

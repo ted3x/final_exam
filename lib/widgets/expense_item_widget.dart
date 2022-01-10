@@ -13,7 +13,6 @@ class ExpenseItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(date);
     return Card(
         elevation: 6,
         shadowColor: Colors.black,
