@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:final_exam/extensions/date_ext.dart';
+
 class Expense {
   late final int id;
   late final String expenseTitle;
@@ -21,6 +23,6 @@ class Expense {
     'id': id,
     'expenseTitle': expenseTitle,
     'amount': amount,
-    'date': date,
+    'date': date.toString(),
   };
 }

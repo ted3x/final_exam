@@ -3,7 +3,6 @@ import 'package:final_exam/data/repository/expenses_repository.dart';
 import 'package:final_exam/logic/state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class ExpensesCubit extends Cubit<RequestState> {
   ExpensesCubit() : super(Loading());
 
@@ -25,7 +24,7 @@ class ExpensesCubit extends Cubit<RequestState> {
     emit(Loading());
     try {
       await expensesRepository.addExpense(expense);
-      emit(Success(null));
+      fetchExpenses();
     } catch (e) {
       emit(
         Error(e.toString()),
@@ -37,7 +36,7 @@ class ExpensesCubit extends Cubit<RequestState> {
     emit(Loading());
     try {
       await expensesRepository.deleteExpense(expense.id);
-      emit(Success(null));
+      fetchExpenses();
     } catch (e) {
       emit(
         Error(e.toString()),
@@ -49,7 +48,7 @@ class ExpensesCubit extends Cubit<RequestState> {
     emit(Loading());
     try {
       await expensesRepository.updateExpense(expense);
-      emit(Success(null));
+      fetchExpenses();
     } catch (e) {
       emit(
         Error(e.toString()),

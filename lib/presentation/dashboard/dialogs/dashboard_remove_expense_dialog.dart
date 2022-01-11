@@ -3,7 +3,7 @@ import 'package:final_exam/logic/expenses_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 
-void showRemoveExpenseDialog(BuildContext context, Expense expense) async {
+Future<bool> showRemoveExpenseDialog(BuildContext context, Expense expense) async {
   var result = await showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -18,6 +18,7 @@ void showRemoveExpenseDialog(BuildContext context, Expense expense) async {
           TextButton(
               onPressed: () {
                 context.read<ExpensesCubit>().deleteExpense(expense);
+                Navigator.pop(context, true);
               },
               child: const Text('Remove'))
         ],
@@ -25,4 +26,5 @@ void showRemoveExpenseDialog(BuildContext context, Expense expense) async {
   if (result == true) {
     Navigator.pop(context, result);
   }
+  return result;
 }

@@ -12,10 +12,12 @@ import 'package:provider/src/provider.dart';
 import '../../../main.dart';
 
 Form getAddExpenseWidget(BuildContext context) {
+  context.read<ExpensesDateCubit>().setDateTime(null);
   final _formKey = GlobalKey<FormState>();
   final _idController = TextEditingController();
   final _amountController = TextEditingController();
   final _titleController = TextEditingController();
+  var _selectedDate;
   return Form(
       key: _formKey,
       child: Container(
@@ -36,6 +38,7 @@ Form getAddExpenseWidget(BuildContext context) {
                 BlocBuilder<ExpensesDateCubit, DateTime?>(
                   builder: (context, dateTime) {
                     if (dateTime != null) {
+                      _selectedDate = dateTime;
                       return Text(dateTime.format(),
                           style: GoogleFonts.poppins(
                               color: const Color(textColor), fontSize: 18));
@@ -54,7 +57,7 @@ Form getAddExpenseWidget(BuildContext context) {
                           textStyle: const TextStyle(
                               color: Colors.white, fontSize: 20)),
                     ), () {
-                  selectDate(context);
+                  selectDate(context, _selectedDate);
                 }),
               ],
             ),
@@ -73,6 +76,7 @@ Form getAddExpenseWidget(BuildContext context) {
                         expenseTitle: _titleController.text,
                         date: context.read<ExpensesDateCubit>().state!);
                     context.read<ExpensesCubit>().addExpense(expense);
+                    Navigator.pop(context);
                   }
                 }))
           ])));

@@ -10,13 +10,15 @@ extension DateFormatting on DateTime {
 // ···
 }
 
-Future<DateTime?> selectDate(BuildContext context) async {
+Future<DateTime?> selectDate(BuildContext context, DateTime? selectedDate) async {
   final DateTime? picked = await showDatePicker(
     context: context,
-    initialDate: DateTime.now(),
+    initialDate: selectedDate ?? DateTime.now(),
     firstDate: DateTime(2000),
     lastDate: DateTime.now(),
     locale: const Locale('en', 'GB'),
   );
-  context.read<ExpensesDateCubit>().setDateTime(picked);
+  if (picked != null) {
+    context.read<ExpensesDateCubit>().setDateTime(picked);
+  }
 }

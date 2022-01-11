@@ -16,17 +16,17 @@ Column getExpenseWidget(BuildContext context, Expense expense) {
       Text(expense.expenseTitle,
           style: GoogleFonts.poppins(
               textStyle:
-                  const TextStyle(fontSize: 27, color: Color(textColor)))),
+              const TextStyle(fontSize: 27, color: Color(textColor)))),
       const SizedBox(height: 39),
       Container(
           padding: const EdgeInsets.only(left: 32, right: 19),
           child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
               'Expense Amount',
               style: GoogleFonts.poppins(
                   textStyle:
-                      const TextStyle(color: Color(textColor), fontSize: 18)),
+                  const TextStyle(color: Color(textColor), fontSize: 18)),
             ),
             Text(expense.amount.toString() + ' \$',
                 style: GoogleFonts.poppins(
@@ -46,7 +46,7 @@ Column getExpenseWidget(BuildContext context, Expense expense) {
                 expense.date.format(),
                 style: GoogleFonts.poppins(
                     textStyle:
-                        const TextStyle(color: Color(textColor), fontSize: 18)),
+                    const TextStyle(color: Color(textColor), fontSize: 18)),
               )
             ],
           )),
@@ -57,13 +57,13 @@ Column getExpenseWidget(BuildContext context, Expense expense) {
         children: [
           RoundButtonWidget(const Color(darkGreen), const Color(darkGreen),
               Icons.edit, Colors.white, () {
-            showBottomDialog(
-                context, getEditExpenseWidget(context, expense));
-          }),
+                showBottomDialog(
+                    context, getEditExpenseWidget(context, expense));
+              }),
           RoundButtonWidget(const Color(darkGreen), const Color(darkGreen),
               Icons.delete, Colors.white, () async {
-            showRemoveExpenseDialog(context, expense);
-          }),
+                showRemoveExpenseDialog(context, expense);
+              }),
         ],
       )
     ],

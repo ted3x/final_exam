@@ -12,12 +12,13 @@ import 'package:provider/src/provider.dart';
 import '../../../main.dart';
 
 Form getEditExpenseWidget(BuildContext context, Expense expense) {
+  context.read<ExpensesDateCubit>().setDateTime(expense.date);
   final _formKey = GlobalKey<FormState>();
   final _idController = TextEditingController(text: expense.id.toString());
   final _amountController =
       TextEditingController(text: expense.amount.toString());
   final _titleController = TextEditingController(text: expense.expenseTitle);
-  DateTime? _selectedDate;
+  var _selectedDate;
   return Form(
       key: _formKey,
       child: Container(
@@ -36,6 +37,7 @@ Form getEditExpenseWidget(BuildContext context, Expense expense) {
                 BlocBuilder<ExpensesDateCubit, DateTime?>(
                   builder: (context, dateTime) {
                     if (dateTime != null) {
+                      _selectedDate = dateTime;
                       return Text(dateTime.format(),
                           style: GoogleFonts.poppins(
                               color: const Color(textColor), fontSize: 18));
@@ -50,7 +52,7 @@ Form getEditExpenseWidget(BuildContext context, Expense expense) {
                     textStyle: const TextStyle(
                         color: Colors.white, fontSize: 20))),
                     () {
-                    selectDate(context);
+                    selectDate(context, _selectedDate);
                   }
                 ),
               ],
@@ -61,13 +63,14 @@ Form getEditExpenseWidget(BuildContext context, Expense expense) {
                 Text('EDIT',
                     style: GoogleFonts.poppins(
                         color: Colors.white, fontSize: 18)), () {
-              if (_formKey.currentState!.validate()) {
+              if (_formKey.currentState!.validate() && _selectedDate != null) {
                 var expense = Expense(
                     id: int.parse(_idController.text),
                     amount: int.parse(_amountController.text),
                     expenseTitle: _titleController.text,
                     date: _selectedDate!);
                 context.read<ExpensesCubit>().updateExpense(expense);
+                Navigator.popUntil(context,ModalRoute.withName('/dashboard'));
               }
             })
           ])));
