@@ -19,8 +19,32 @@ class DashboardScreen extends StatefulWidget {
   _DashboardScreenState createState() => _DashboardScreenState();
 }
 
-class _DashboardScreenState extends State<DashboardScreen> {
+class _DashboardScreenState extends State<DashboardScreen>
+    with SingleTickerProviderStateMixin {
   final expensesHelper = ExpensesHelper();
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(seconds: 2),
+    vsync: this,
+  )..forward();
+  late final Animation<Offset> _offsetAnimation = Tween<Offset>(
+    begin: const Offset(0.0, 1.0),
+    end: const Offset(0.0, 0.0),
+  ).animate(CurvedAnimation(
+    parent: _controller,
+    curve: Curves.bounceIn,
+  ));
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is Success<List<Expense>> &&
                       state.data != null) {
-                    return Expanded(
+                    return Flexible(
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -87,29 +111,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   fontSize: 20,
                                                   color: Color(textColor))))))),
                           Expanded(
-                              child: ListView.separated(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  separatorBuilder:
-                                      (BuildContext context, int index) =>
-                                          const SizedBox(height: 4),
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        // amis feri ver davamtxvie dokumentaciidan, xd-shic sxva feria amitom davtove es
-                                        showBottomDialog(
-                                            context,
-                                            getExpenseWidget(
-                                                context, state.data![index]));
-                                      },
-                                      child: ExpenseItemWidget(
-                                          state.data![index].expenseTitle,
-                                          state.data![index].amount.toString() +
-                                              ' \$',
-                                          state.data![index].date),
-                                    );
-                                  },
-                                  itemCount: state.data!.length))
+                            child: SlideTransition(
+                                position: _offsetAnimation,
+                                child: ListView.separated(
+                                    padding: EdgeInsets.zero,
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    separatorBuilder:
+                                        (BuildContext context, int index) =>
+                                            const SizedBox(height: 4),
+                                    itemBuilder: (context, index) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          // amis feri ver davamtxvie dokumentaciidan, xd-shic sxva feria amitom davtove es
+                                          showBottomDialog(
+                                              context,
+                                              getExpenseWidget(
+                                                  context, state.data![index]));
+                                        },
+                                        child: ExpenseItemWidget(
+                                            state.data![index].expenseTitle,
+                                            state.data![index].amount
+                                                    .toString() +
+                                                ' \$',
+                                            state.data![index].date),
+                                      );
+                                    },
+                                    itemCount: state.data!.length)),
+                          )
                         ]));
                   } else {
                     return Center(
@@ -123,7 +152,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 }
-
 
 void showBottomDialog(BuildContext context, Widget widget) {
   showModalBottomSheet(
